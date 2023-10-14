@@ -253,7 +253,7 @@ def Transaction_type_highest_transaction_counts():
     for row in cursor:
         print(row)
         # Open the image file
-    img = Image.open('Transaction_Types_with_Transaction_count.png')
+    img = Image.open('../resources/graphs/Transaction_Types_with_Transaction_count.png')
     # Show the image
     plt.imshow(img)
     plt.show()
@@ -277,7 +277,7 @@ def state_high_customer():
     for row in cursor:
         print(row)
         # Open the image file
-    img = Image.open('Customers_state.png')
+    img = Image.open('../resources/graphs/Customers_state.png')
     # Show the image
     plt.imshow(img)
     plt.show()
