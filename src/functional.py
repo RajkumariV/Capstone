@@ -1,11 +1,18 @@
 import mysql.connector
 import secret
+from PIL import Image
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+import re
+
+
+
 
 def connect_database():
     user= secret.mysql_username
     passw = secret.mysql_password
     # Connect to the database
-    cnx = mysql.connector.connect(user='root', password= 'password',
+    cnx = mysql.connector.connect(user=user, password= passw,
                             database='creditcard_capstone')
     
     return cnx
@@ -78,7 +85,7 @@ def number_value_transaction_for_branches_givenstate():
     cnx.close()       
     
 
-# customer details
+#### customer details
 
 #1)Used to check the existing account details of a customer.
 
@@ -109,16 +116,21 @@ def Modify_cust_phone():
     cursor = cnx.cursor()
    # Get user input
     CC_SSN= input("Enter Credit Card No or SSN Number of the customer:")
-    CUST_PHONE=input("Enter New Phone Number in this format (XXX) XXX-XXXX:")
+    CUST_PHONE=input("Enter New 10 digit valid phone number :")
+    pattern = r'^\d{10}$'
+    if CUST_PHONE and re.match(pattern,CUST_PHONE):
+        CUST_PHONE_FMT= f"({CUST_PHONE[:3]}) {CUST_PHONE[3:6]}-{CUST_PHONE[6:]}"    
     # Define another query
-    query = ("""update cdw_sapp_customer
-            set CUST_PHONE = %s
-            where CREDIT_CARD_NO = %s or SSN =%s""")
-    params = (CUST_PHONE,CC_SSN,CC_SSN)
-    cursor.execute(query,params)
-    cnx.commit()
-    # Print the results
-    print("Customer Phone number has been updated" )
+        query = ("""update cdw_sapp_customer
+                set CUST_PHONE = %s
+                where CREDIT_CARD_NO = %s or SSN =%s""")
+        params = (CUST_PHONE_FMT,CC_SSN,CC_SSN)
+        cursor.execute(query,params)
+        cnx.commit()
+        # Print the results
+        print("Customer Phone number has been updated" )
+    else:
+        print("Please enter a non empty valid 10 digit phone number and retry.")  
     cnx.close()
 
 # B.modify customer address
@@ -135,16 +147,43 @@ def Modify_Cust_Address():
     ZIP=input("Enter New Zip:")
     COUNTRY=input("Enter New Country:")
     RESIDENCE = STREET_NAME +","+ APT_NO
+    # Check if all input fields are filled
+    if APT_NO and STREET_NAME and CITY and STATE and ZIP and COUNTRY:
     # Define another query
-    query = ("""update cdw_sapp_customer
-             set APT_NO = %s,STREET_NAME = %s,RESIDENCE = %s,CUST_CITY = %s,CUST_STATE = %s,CUST_ZIP = %s,CUST_COUNTRY = %s
-            where CREDIT_CARD_NO = %s or SSN =%s""")
-    params = (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY,CC_SSN,CC_SSN)
-    cursor.execute(query,params)
-    cnx.commit()
-    # Print the results
-    print("Customer Address has been updated" )
+        query = ("""update cdw_sapp_customer
+                set APT_NO = %s,STREET_NAME = %s,RESIDENCE = %s,CUST_CITY = %s,CUST_STATE = %s,CUST_ZIP = %s,CUST_COUNTRY = %s
+                where CREDIT_CARD_NO = %s or SSN =%s""")
+        params = (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY,CC_SSN,CC_SSN)
+        cursor.execute(query,params)
+        cnx.commit()
+        # Print the results
+        print("Customer Address has been updated" )
+    else:
+        print("Please provide all address fields.")    
     cnx.close()
+
+def Modify_cust_email_ID():
+    cnx = connect_database()
+    # Create a cursor object
+    cursor = cnx.cursor()
+   # Get user input
+    CC_SSN= input("Enter Credit Card No or SSN Number of the customer:")
+    CUST_EMAIL=input("Enter new valid email Id :")
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
+    if CUST_EMAIL and (re.fullmatch(regex, CUST_EMAIL)):
+    # Define another query
+        query = ("""update cdw_sapp_customer
+                set CUST_EMAIL = %s
+                where CREDIT_CARD_NO = %s or SSN =%s""")
+        params = (CUST_EMAIL,CC_SSN,CC_SSN)
+        cursor.execute(query,params)
+        cnx.commit()
+        # Print the results
+        print("Customer Email Id has been updated" )
+    else:
+        print("Please enter valid email address and retry.")  
+    cnx.close()
+
 
 #3) Used to generate a monthly bill for a credit card number for a given month and year.
 def generate_monthly_bill():
@@ -197,22 +236,29 @@ def transaction_by_customer_between_two_dates():
     cnx.close()
 
 
-# Data Analysis
+## Data Analysis
 
 #Find and plot which transaction type has the highest transaction count.
-def transaction_by_customer_between_two_dates():
+def Transaction_type_highest_transaction_counts():
     cnx = connect_database()
     # Create a cursor object
     cursor = cnx.cursor()
     # Define another query
     query = ("""select transaction_type,count(transaction_id) as Transaction_count from cdw_sapp_credit_card
-            group by TRANSACTION_TYPE""")
+            group by TRANSACTION_TYPE
+            order by Transaction_count DESC
+             Limit 1""")
     cursor.execute(query)
     # Print the results
-    print("C:\Capstone Project\credit_resources\Transaction Types with Transaction count.png")
     for row in cursor:
         print(row)
+        # Open the image file
+    img = Image.open('Transaction_Types_with_Transaction_count.png')
+    # Show the image
+    plt.imshow(img)
+    plt.show()
     cnx.close()
+   
 
 #Find and plot which state has a high number of customers.
 
@@ -221,16 +267,23 @@ def state_high_customer():
     # Create a cursor object
     cursor = cnx.cursor()
     # Define another query
-    query = ("""select cust_state ,count(credit_card_no) 
+    query = ("""select cust_state ,count(credit_card_no) as customer
             from cdw_sapp_customer
-            group by cust_state""")
-
+            group by cust_state
+             order by customer DESC 
+             limit 1""")
     cursor.execute(query)
     # Print the results
-    print("C:\Capstone Project\credit_resources\High Number of customer state.png")
     for row in cursor:
         print(row)
+        # Open the image file
+    img = Image.open('Customers_state.png')
+    # Show the image
+    plt.imshow(img)
+    plt.show()
     cnx.close()
+  
+    
 
 # Find and plot the sum of all transactions for the top 10 customers, and which customer has the highest transaction amount.
 # Hint (use CUST_SSN). 
@@ -240,18 +293,24 @@ def top_customers():
     # Create a cursor object
     cursor = cnx.cursor()
     # Define another query
-    query = ("""select sum(transaction_value),cust_ssn
-            from cdw_sapp_credit_card as card
-            join  cdw_sapp_customer as customer
-            on card.credit_card_no=customer.credit_card_no
-            group by CUST_SSN
-            limit 10""")
+    query = ("""SELECT REPLACE(cust_ssn, LEFT(cust_ssn, 5), 'XXXXX') AS masked_ssn, SUM(transaction_value)
+            FROM cdw_sapp_credit_card AS card
+            JOIN cdw_sapp_customer AS customer ON card.credit_card_no = customer.credit_card_no
+            GROUP BY cust_ssn
+            LIMIT 10""")
     cursor.execute(query)
     # Print the results
-    print("C:\Capstone Project\credit_resources\Top 10 Customers1.png")
+    #print("C:\Capstone Project\credit_resources\Top 10 Customers1.png")
     for row in cursor:
         print(row)
+    # Open the image file
+    img = Image.open('../resources/graphs/Top_Customers.png')
+    # Show the image
+    plt.imshow(img)
+    plt.show()
     cnx.close()
+    
+    
 
 
 

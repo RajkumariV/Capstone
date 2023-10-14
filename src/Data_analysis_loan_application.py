@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 import secret
 
-#Find and plot the percentage of applications approved for self-employed applicants.
+# Q Find and plot the percentage of applications approved for self-employed applicants.
 
 def connect_to_database ():
     user= secret.mysql_username
     passw = secret.mysql_password
-    
     engine = create_engine(f'mysql+mysqlconnector://{user}:{passw}@localhost/creditcard_capstone')
     return engine
+    
 
 def Persantage_Approved_Self_Employed ():
     engine=connect_to_database ()
@@ -25,8 +25,8 @@ def Persantage_Approved_Self_Employed ():
     plt.figure(figsize=(10, 6))
     explode = (0.05,0.05)
     plt.pie([approval_rate, notapproval_rate], labels=['Approved', 'Not Approved'], 
-                    autopct='%1.1f%%', colors=['blue', 'yellow'], startangle=90,explode=explode)
-    plt.title('Percentage of Applications Approved for Self-Employed Applicants')
+                    autopct='%1.1f%%', colors=['cyan', 'gold'], startangle=90,explode=explode,textprops={'fontsize': 14})
+    plt.title('Percentage of Applications Approved for Self-Employed Applicants',fontsize=16)
     # Add a circle at the center of the pie chart
     centre_circle = plt.Circle((0, 0), 0.40, fc='white')
     fig = plt.gcf()
@@ -53,8 +53,8 @@ def Persantage_rejected_male_applicant():
     plt.figure(figsize=(10, 6))
     explode = (0.05,0.05)
     plt.pie([rejection_rate, accepted_rate], labels=['Rejected', 'Accepted'],  autopct='%.2f%%',
-        colors=['red', 'green'], startangle=90,explode=explode)
-    plt.title('Percentage of Applications Rejected for Married Male Applicants')
+        colors=['red', 'lightgreen'], startangle=90,explode=explode,textprops={'fontsize': 14})
+    plt.title('Percentage of Applications Rejected for Married Male Applicants',fontsize=16)
     # Add a circle at the center of the pie chart
     centre_circle = plt.Circle((0, 0), 0.40, fc='white')
     fig = plt.gcf()
@@ -70,12 +70,9 @@ def Top_Three_Months_with_Largest_Transaction_Volume():
     engine=connect_to_database ()
     df = pd.read_sql_table('cdw_sapp_credit_card', engine)
     monthly_data = df.groupby('MONTH')['TRANSACTION_VALUE'].sum()
-    print(monthly_data)
-
     # Get the top three months with the largest transaction volume
     top_three = monthly_data.nlargest(3)
-
-
+    print(top_three)
     # Plot the top three months
     plt.bar(top_three.index, top_three.values)
     plt.xlabel('Month')
@@ -83,7 +80,7 @@ def Top_Three_Months_with_Largest_Transaction_Volume():
     plt.title('Top Three Months with Largest Transaction Volume')
     plt.grid(linestyle='--')
     plt.show()
-
+    
 def branch_highest_value_healthcare_transactions():
     engine=connect_to_database ()
 
@@ -105,12 +102,17 @@ def branch_highest_value_healthcare_transactions():
     # Plot the data for the highest branch
     plt.plot(branch_data,marker='.')
     plt.plot(top_branch,marker='o',markerfacecolor='red',markersize=10,label = 'Highest transaction branch')
-
-
     plt.xlabel('Branch Code')
     plt.ylabel('Transaction Value')
     plt.title(f'Healthcare Transactions by Branch (Highest: {highest_branch})')
     plt.legend(loc='upper right')
     plt.show()
+
+    
+    
+
+    
+
+
 
     
