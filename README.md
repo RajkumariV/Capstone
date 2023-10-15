@@ -3,7 +3,7 @@
 
 ## Project requirements:
 
-![Alt text](./resources/graphs/Demo_objective.png)
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Demo_Objective.png)
 
 # Things to Remember before starting this project
 
