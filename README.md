@@ -55,14 +55,14 @@ Once data is loaded into the database, we need a front-end (console) to see/disp
 ### 3. Credit Card Data Analysis and Visualization
 
 After data is loaded into the database, users can make changes from the front end, and they can also view data from the front end. Now, the business analyst team wants to analyze and visualize the data according to the below requirements. Use Python libraries for the below requirements:
-#### 3.1) - Find and plot which transaction type has the highest transaction count.
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Transaction_Types_with_Transaction_count.png)
+#### 3.1) Find and plot which transaction type has the highest transaction count.
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Transaction_Types_with_Transaction_count.png)
 
-#### 3.2) -Show which state has the highest number of customers
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Customers_State.png)
-- .
-#### 3.3) -Find and plot the sum of all transactions for the top 10 customers, and which customer has the highest transaction amount.Hint (use CUST_SSN)
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top_Customers.png)
+#### 3.2) Show which state has the highest number of customers
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Customers_State.png)
+
+#### 3.3) Find and plot the sum of all transactions for the top 10 customers, and which customer has the highest transaction amount.Hint (use CUST_SSN)
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top_Customers.png)
 
 ### Overview of LOAN application Data API
 Banks deal in all home loans. They have a presence across all urban, semi-urban, and rural areas. Customers first apply for a home loan; after that, a company will validate the customer's eligibility for a loan.
@@ -84,19 +84,30 @@ The above URL allows you to access information about loan application informatio
 
 ### 5. Loan Data Analysis and Visualization
 
-#### 5.1) -Find and plot the percentage of applications approved for self-employed applicants
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Approved_self_employed.png)
+#### 5.1)Find and plot the percentage of applications approved for self-employed applicants
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Approved_self_employed.png)
 
-#### 5.2)- Find the percentage of rejection for married male applicants.
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Rejected_married_male_applicant.png)
+#### 5.2)Find the percentage of rejection for married male applicants.
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Rejected_married_male_applicant.png)
 
-#### 5.3)-Find and plot the top three months with the largest volume of transaction data.
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top3_months_Largest_transaction.png)
+#### 5.3)Find and plot the top three months with the largest volume of transaction data.
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top3_months_Largest_transaction.png)
 
-#### 5.4--Find and plot which branch processed the highest total dollar value of healthcare transactions.
--![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Helthcare_transaction_by%20_Branch.png)
+#### 5.4Find and plot which branch processed the highest total dollar value of healthcare transactions.
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Helthcare_transaction_by%20_Branch.png)
 
 ## Technical Challenges
+
+### Modifying Customer Account Details
+
+One project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well since there are options to update the apartment number and street name .So did some research on that and found that if we ask bank to change our appartment no. or strret no. or state or county ,Bank will ask full address proof for security purpose and full address is verified along with small apt change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate. Although this portion of the project took the longest to implement, writing the code this way did shorten the time it took to complete it.
+
+### Tableau vs Matplotlib
+
+Tableau is a business intelligence tool that allows you to connect to almost any database, drag and drop to create visualizations, and share with a click. It provides a user-friendly system that allows you to create attractive visualizations with ease.
+Matplotlib, on the other hand, is a Python plotting library that produces publication-quality figures in a variety of hardcopy formats and interactive environments across platforms. It offers a variety of free data visualization libraries to data scientists such as Seaborn, Plotly, and more. With Matplotlib, you can visualize any data and their available documentation offers a better user experience.
+In summary, if you’re looking for a tool that provides attractive visualizations with ease of use, Tableau might be the right choice for you. If you’re looking for a more flexible and customizable tool that allows you to create publication-quality figures, Matplotlib might be the better option.
+So for section Three I used Tableau and for section 5 I used matplotlib.
 
 ## Skillsets
 - Python
