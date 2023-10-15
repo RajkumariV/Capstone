@@ -3,7 +3,7 @@
 
 ## Project requirements:
 
-![Alt text](image-1.png)
+![Alt text](./resources/graphs/Demo_objective.png)
 
 # Things to Remember before starting this project
 
