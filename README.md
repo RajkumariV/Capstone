@@ -40,6 +40,7 @@ An engine is a higher-level object that provides a simplified interface for conn
 A cnx (short for connection) is a lower-level object that represents a connection to a database. It is typically used for executing SQL statements DIRECTLY and managing transactions.
 
 ### 2. Application Front-End
+
 Once data is loaded into the database, we need a front-end (console) to see/display data. For that, create a console-based Python program to satisfy System Requirements 2 (2.1 and 2.2).
 #### 2.1) Transaction Details Module
 - Used to display the transactions made by customers living in a given zip code for a given month and year. Order by day in descending order.
@@ -50,16 +51,18 @@ Once data is loaded into the database, we need a front-end (console) to see/disp
 - Modify the existing account details of a customer.
 - Generate a monthly bill for a credit card number for a given month and year.
 - Display the transactions made by a customer between two dates. Order by year, month, and day in descending order.
+
 ### 3. Credit Card Data Analysis and Visualization
+
 After data is loaded into the database, users can make changes from the front end, and they can also view data from the front end. Now, the business analyst team wants to analyze and visualize the data according to the below requirements. Use Python libraries for the below requirements:
 #### 3.1) - Find and plot which transaction type has the highest transaction count.
--![Alt text](image-2.png)
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Transaction_Types_with_Transaction_count.png)
 
 #### 3.2) -Show which state has the highest number of customers
--![Alt text](image-3.png)
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Customers_State.png)
 - .
 #### 3.3) -Find and plot the sum of all transactions for the top 10 customers, and which customer has the highest transaction amount.Hint (use CUST_SSN)
--![Alt text](image-4.png)
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top_Customers.png)
 
 ### Overview of LOAN application Data API
 Banks deal in all home loans. They have a presence across all urban, semi-urban, and rural areas. Customers first apply for a home loan; after that, a company will validate the customer's eligibility for a loan.
@@ -71,6 +74,7 @@ Banks want to automate the loan eligibility process (in real-time) based on cust
 The above URL allows you to access information about loan application information. This dataset has all of the required fields for a loan application. You can access data from a REST API by sending an HTTP request and processing the response.
 
 ### 4. LOAN Application Dataset
+
 #### 4.1) Access API Endpoint
 - Create a Python program to GET (consume) data from the above API endpoint for the loan application dataset.
 #### 4.2) Access Status Code
@@ -79,13 +83,18 @@ The above URL allows you to access information about loan application informatio
 - Once Python reads data from the API, utilize PySpark to load data into RDBMS(SQL). The table name should be "CDW-SAPP_loan_application" in the database. Use the “creditcard_capstone” database.
 
 ### 5. Loan Data Analysis and Visualization
+
 #### 5.1) -Find and plot the percentage of applications approved for self-employed applicants
--
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Approved_self_employed.png)
+
 #### 5.2)- Find the percentage of rejection for married male applicants.
--
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Rejected_married_male_applicant.png)
+
 #### 5.3)-Find and plot the top three months with the largest volume of transaction data.
-- 
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top3_months_Largest_transaction.png)
+
 #### 5.4--Find and plot which branch processed the highest total dollar value of healthcare transactions.
+-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Helthcare_transaction_by%20_Branch.png)
 
 ## Technical Challenges
 

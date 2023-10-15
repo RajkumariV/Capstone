@@ -277,7 +277,7 @@ def state_high_customer():
     for row in cursor:
         print(row)
         # Open the image file
-    img = Image.open('../resources/graphs/Customers_state.png')
+    img = Image.open('../resources/graphs/Customers_State.png')
     # Show the image
     plt.imshow(img)
     plt.show()
