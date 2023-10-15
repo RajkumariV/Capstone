@@ -74,7 +74,8 @@ def Top_Three_Months_with_Largest_Transaction_Volume():
     top_three = monthly_data.nlargest(3)
     print(top_three)
     # Plot the top three months
-    plt.bar(top_three.index, top_three.values)
+    colors = ['green', 'blue', 'orange']
+    plt.bar(top_three.index, top_three.values,color=colors)
     plt.xlabel('Month')
     plt.ylabel('Transaction Volume')
     plt.title('Top Three Months with Largest Transaction Volume')
@@ -96,19 +97,21 @@ def branch_highest_value_healthcare_transactions():
     # Get the branch with the highest total dollar value of healthcare transactions
     highest_branch = branch_data.idxmax()
     #idxmax() method of a pandas DataFrame object to return the index of the maximum value across a specified axis.
-    top_branch = branch_data.nlargest(1)
+    top_branch = branch_data.nlargest(5)
     print(top_branch)
 
-    # Plot the data for the highest branch
-    plt.plot(branch_data,marker='.')
-    plt.plot(top_branch,marker='o',markerfacecolor='red',markersize=10,label = 'Highest transaction branch')
+    #plt.plot(branch_data1)
+    sizes=[90,70,50,30,10]
+    plt.bar(top_branch.index,top_branch,edgecolor='black')
+    plt.scatter(top_branch.index,top_branch,s=sizes)
+    #plt.bar(top_three.index, top_three.values,color=colors, edgecolor='black')
     plt.xlabel('Branch Code')
     plt.ylabel('Transaction Value')
+    plt.xticks(top_branch.index)
+    #plt.yticks([100000, 200000, 300000, 400000, 500000])
     plt.title(f'Healthcare Transactions by Branch (Highest: {highest_branch})')
-    plt.legend(loc='upper right')
     plt.show()
-
-    
+        
     
 
     
