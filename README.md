@@ -5,7 +5,7 @@
 
 ![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Demo_Objective.png)
 
-# Things to Remember before starting this project
+# Things to considered before starting this project
 
 #### Data safety 
 -refers to the protection of data from accidental or intentional loss, corruption, or unauthorized access. It involves creating backups, implementing disaster recovery plans, and ensuring that data is stored in a secure location.
@@ -15,7 +15,17 @@
 (To ensure Data Safety Customers SSN is handled as Masked.)
 #### Data validity 
 -refers to the degree to which data accurately represents the business rules or definitions. In other words, data must be relevant and representative of the business metrics it describes.
-(7 digit phone no in customer table can be a real time scnerio for that data engineer needs to check Area code if area code is concated to 7 digit no valid phone no can be created but in oue project area code was also not given so random no(1111) added to make data valid)
+(7 digit phone no in customer table can be a real time scnerio for that data engineer needs to check Area code if area code is concated to 7 digit number valid phone number can be created but in oue project area code was also not given so random no(111) added to make data valid)
+
+
+### Project Instructions
+#Local
+if you want to run this project in your local download raw files and while connecting to database use your user and password and mark # aws connection code as below for all 3 files.
+-#file_json_data = get_json_file_data_aws_s3_bucket("capstone.creditcard.loan","cdw_sapp_branch.json")    
+-#Branch_df=spark.read.json(spark.sparkContext.parallelize([file_json_data]))
+#AWS
+for connecting to cloud AWS create a S3 bucket in AWS account upload raw files ,create key id and key password use it for AWS connection mark #  file connection code as below for all 3 files
+-#branch_df=spark.read.json("C:\Capstone Project\CDW_SAPP_BRANCH.JSON")
 
 ### 1. Load Credit Card Database (SQL)
 #### 1.1) Data Extraction and Transformation with Python and PySpark
@@ -34,10 +44,11 @@ Once PySpark reads data from JSON files, and then utilizes Python, PySpark, and 
 		- CDW_SAPP_CUSTOMER
 
 ## Database Connection- I have used different methods in different section to connect to database
+A cnx (short for connection) is a lower-level object that represents a connection to a database. It is typically used for executing SQL statements DIRECTLY and managing transactions.
+(Query was done in database through python so cnx worked)
 
 An engine is a higher-level object that provides a simplified interface for connecting to a database. It is typically used for executing SQL statements and managing transactions.
-
-A cnx (short for connection) is a lower-level object that represents a connection to a database. It is typically used for executing SQL statements DIRECTLY and managing transactions.
+(engine is needed to get full table in dataframe )
 
 ### 2. Application Front-End
 
@@ -54,7 +65,9 @@ Once data is loaded into the database, we need a front-end (console) to see/disp
 
 ### 3. Credit Card Data Analysis and Visualization
 
-After data is loaded into the database, users can make changes from the front end, and they can also view data from the front end. Now, the business analyst team wants to analyze and visualize the data according to the below requirements. Use Python libraries for the below requirements:
+## Tableau
+For this section I have used Tableau so query was done in database and then saved it in csv file and loaded in Tableau to make plots,and these be used in Power BI, however Tableau desktop gives us option to connect to my sql database and query inside tableau.
+
 #### 3.1) Find and plot which transaction type has the highest transaction count.
 ![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Transaction_Types_with_Transaction_count.png)
 
@@ -65,8 +78,6 @@ After data is loaded into the database, users can make changes from the front en
 ![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Top_Customers.png)
 
 ### Overview of LOAN application Data API
-Banks deal in all home loans. They have a presence across all urban, semi-urban, and rural areas. Customers first apply for a home loan; after that, a company will validate the customer's eligibility for a loan.
-
 Banks want to automate the loan eligibility process (in real-time) based on customer details provided while filling out the online application form. These details are Gender, Marital Status, Education, Number of Dependents, Income, Loan Amount, Credit History, and others. To automate this process, they have the task of identifying the customer segments to those who are eligible for loan amounts so that they can specifically target these customers. Here they have provided a partial dataset.
 
 #### API Endpoint: [https://raw.githubusercontent.com/platformps/LoanDataset/main/loan_data.json](https://raw.githubusercontent.com/platformps/LoanDataset/main/loan_data.json)
@@ -100,7 +111,7 @@ The above URL allows you to access information about loan application informatio
 
 ### Modifying Customer Account Details
 
-One project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well since there are options to update the apartment number and street name .So did some research on that and found that if we ask bank to change our appartment no. or strret no. or state or county ,Bank will ask full address proof for security purpose and full address is verified along with small apt change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate. Although this portion of the project took the longest to implement, writing the code this way did shorten the time it took to complete it.
+Project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well.So did some research on that and found that if we ask bank to change our appartment no. or strret no. or state or county ,Bank will ask full address proof for security purpose and full address is verified along with small apt change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate. Although this portion of the project took the longest to implement, writing the code this way did shorten the time it took to complete it.
 
 ### Tableau vs Matplotlib
 
@@ -114,8 +125,8 @@ So for section Three I used Tableau and for section 5 I used matplotlib.
 - SQL
 - Apache Spark
 - REST API
-- Git
+- Github
 - My SQL
 - Pandas library
 - Matplotlib library
--Tableau
+- Tableau
