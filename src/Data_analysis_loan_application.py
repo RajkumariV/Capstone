@@ -8,7 +8,7 @@ import secret
 def connect_to_database ():
     user= secret.mysql_username
     passw = secret.mysql_password
-    engine = create_engine(f'mysql+mysqlconnector://{user}:{passw}@localhost/creditcard_capstone')
+    engine = create_engine(f'mysql+mysqlconnector://{secret.mysql_username}:{secret.mysql_password}@localhost/creditcard_capstone')
     return engine
     
 
@@ -20,8 +20,8 @@ def Persantage_Approved_Self_Employed ():
     total_applications = len(self_employed_df)
     approved_applications = len(self_employed_df[self_employed_df['Application_Status'] == 'Y'])
     approval_rate = approved_applications / total_applications
-    notapproval_rate = 1 - approval_rate  # Disapproval rate is the remainder
-            
+    approval_per=approval_rate*100
+    print(approval_per)
     plt.figure(figsize=(10, 6))
     explode = (0.05,0.05)
     plt.pie([approval_rate, notapproval_rate], labels=['Approved', 'Not Approved'], 
@@ -32,8 +32,9 @@ def Persantage_Approved_Self_Employed ():
     fig = plt.gcf()
     fig.gca().add_artist(centre_circle)
     #The plt.gcf() method gets the current figure, and fig.gca() gets the current axis.
-
+    plt.legend(labels=['Approved', 'Not Approved'],loc='upper left',bbox_to_anchor=(1,1))
     print(plt.show())
+    
 
 def Persantage_rejected_male_applicant():
     engine=connect_to_database ()
@@ -46,8 +47,9 @@ def Persantage_rejected_male_applicant():
     rejected_applications = married_male_df[married_male_df['Application_Status'] == 'N']
     total_rejected = len(rejected_applications)
     # print(rejected_applications)
-    # input(nav)
+    
     rejection_rate = total_rejected / total_married_male
+    
     accepted_rate = 1 - rejection_rate  
         
     plt.figure(figsize=(10, 6))
@@ -64,6 +66,7 @@ def Persantage_rejected_male_applicant():
     print("Total Rejections  : ", rejected_applications)
     print("Total Rejections  : ", total_rejected)
     print("Rejected Rate %  : ", rejection_rate*100)
+    plt.legend(labels=['Rejected', 'Accepted'],loc='upper left',bbox_to_anchor=(1,1))
     print(plt.show())
 
 def Top_Three_Months_with_Largest_Transaction_Volume():
