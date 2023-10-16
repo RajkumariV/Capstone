@@ -10,6 +10,9 @@ __pycache__/
 .Python
 build/
 src/secret.py
+Test_Transformation.py
+Test_ETL.ipynb
+Test_SQl_Validation.sql
 develop-eggs/
 dist/
 downloads/

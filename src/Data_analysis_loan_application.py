@@ -20,6 +20,7 @@ def Persantage_Approved_Self_Employed ():
     total_applications = len(self_employed_df)
     approved_applications = len(self_employed_df[self_employed_df['Application_Status'] == 'Y'])
     approval_rate = approved_applications / total_applications
+    notapproval_rate=1-approval_rate
     approval_per=approval_rate*100
     print(approval_per)
     plt.figure(figsize=(10, 6))
