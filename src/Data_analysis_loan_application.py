@@ -71,48 +71,42 @@ def Persantage_rejected_male_applicant():
 
 def Top_Three_Months_with_Largest_Transaction_Volume():
     engine=connect_to_database ()
+    
     df = pd.read_sql_table('cdw_sapp_credit_card', engine)
-    monthly_data = df.groupby('MONTH')['TRANSACTION_VALUE'].sum()
-    # Get the top three months with the largest transaction volume
-    top_three = monthly_data.nlargest(3)
-    print(top_three)
-    # Plot the top three months
-    colors = ['green', 'blue', 'orange']
-    plt.bar(top_three.index, top_three.values,color=colors)
-    plt.xlabel('Month')
-    plt.ylabel('Transaction Volume')
-    plt.title('Top Three Months with Largest Transaction Volume')
-    plt.grid(linestyle='--')
+    top_month = df.groupby('MONTH')['TRANSACTION_VALUE'].sum()
+    top_month = top_month.sort_values(ascending=False).head(3)
+    print(top_month)
+    colors = ['peru',  'burlywood','bisque']
+    ax = top_month.plot.bar(rot='horizontal',color=colors)
+
+    ax.set_title('Months With The Highest Transactions Value')
+    ax.set_xlabel('Months')
+    ax.set_ylabel('Transaction Amount')
+    ax.set_ylim(200000, 203000)
+    ax.bar_label(ax.containers[0])
+    """ax.bar_label(ax.containers[0]) is a method call in Matplotlib that adds labels to the bars in a bar plot. The ax parameter is the Axes object that represents the plot, and the containers[0] parameter is the BarContainer object that contains the bars in the plot.
+
+The bar_label() method adds labels to the bars in the given BarContainer. You may need to adjust the axis limits to fit the labels. The fmt parameter specifies the format string for the labels, and the label_type parameter specifies whether to label the edge or center of each bar. The padding parameter specifies the padding between the label and the bar.
+
+Here’s an example of how to use ax.bar_label(ax.containers[0]):"""
+
     plt.show()
     
 def branch_highest_value_healthcare_transactions():
     engine=connect_to_database ()
-
     df = pd.read_sql_table('cdw_sapp_credit_card', engine)
     # Filter the data to include only healthcare transactions
     healthcare_data = df[df['TRANSACTION_TYPE'] == 'Healthcare']
-
     # Group the data by branch code and sum the transaction values
-    branch_data = healthcare_data.groupby('BRANCH_CODE')['TRANSACTION_VALUE'].sum()
-    branch_data = branch_data.sort_values(ascending=False)
-
-
-    # Get the branch with the highest total dollar value of healthcare transactions
-    highest_branch = branch_data.idxmax()
-    #idxmax() method of a pandas DataFrame object to return the index of the maximum value across a specified axis.
-    top_branch = branch_data.nlargest(5)
-    print(top_branch)
-
-    #plt.plot(branch_data1)
-    sizes=[90,70,50,30,10]
-    plt.bar(top_branch.index,top_branch,edgecolor='black')
-    plt.scatter(top_branch.index,top_branch,s=sizes)
-    #plt.bar(top_three.index, top_three.values,color=colors, edgecolor='black')
-    plt.xlabel('Branch Code')
-    plt.ylabel('Transaction Value')
-    plt.xticks(top_branch.index)
-    #plt.yticks([100000, 200000, 300000, 400000, 500000])
-    plt.title(f'Healthcare Transactions by Branch (Highest: {highest_branch})')
+    healthcare_data = healthcare_data.groupby('BRANCH_CODE')['TRANSACTION_VALUE'].sum()
+    healthcare_data = healthcare_data.sort_values(ascending=False)
+    top_branch=healthcare_data.head(1)
+    ax = top_branch.plot.bar(rot='horizontal',color='palegreen',width=0.2)
+    ax.set_title('Top Branch in Healthcare Transactions')
+    ax.set_xlabel('Top Branch Code')
+    ax.set_ylabel('Transaction Amount')
+    ax.bar_label(ax.containers[0],color='red')
+    
     plt.show()
         
     
