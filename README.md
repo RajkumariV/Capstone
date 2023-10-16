@@ -96,7 +96,7 @@ The above URL allows you to access information about loan application informatio
 ### 5. Loan Data Analysis and Visualization
 
 #### 5.1)Find and plot the percentage of applications approved for self-employed applicants
-![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Approved_self_employed.png)
+![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Approved_self_employed_applicant.png)
 
 #### 5.2)Find the percentage of rejection for married male applicants.
 ![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Rejected_married_male_applicant.png)
