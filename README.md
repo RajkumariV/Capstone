@@ -33,7 +33,7 @@ aws_secret_access_key='Your S3 access password'
 
 Refer to comments added in this file creditcard_and_loan_application_etl.py on ETL jobs to switch between using the input raw files from AWS S3 versus using the raw files from your local folder.
 
-Tu run the project menu , use command from console "python capstone_menu.py"
+To run the project menu , use command from console "python capstone_menu.py"
 
 ## Below functionalites have been implemented in this project
 
