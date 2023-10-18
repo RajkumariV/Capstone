@@ -169,7 +169,7 @@ def Modify_cust_phone():
     CC_SSN= input("Enter Credit Card No or SSN Number of the customer:")
     CUST_PHONE=input("Enter New 10 digit valid phone number :")
     pattern = r'^\d{10}$'
-    if CC_SSN and validate_credit_card_number(CC_SSN) or validate_ssn(CC_SSN) and CUST_PHONE and re.match(pattern,CUST_PHONE):
+    if CC_SSN and validate_credit_card_number(CC_SSN) and CUST_PHONE and re.match(pattern,CUST_PHONE):
         CUST_PHONE_FMT= f"({CUST_PHONE[:3]}) {CUST_PHONE[3:6]}-{CUST_PHONE[6:]}"   
     # Define another query
         query = ("""update cdw_sapp_customer
@@ -177,9 +177,13 @@ def Modify_cust_phone():
                 where CREDIT_CARD_NO = %s or SSN =%s""")
         params = (CUST_PHONE_FMT,CC_SSN,CC_SSN)
         cursor.execute(query,params)
+        rowsUpdated = cursor.rowcount
         cnx.commit()
         # Print the results
-        print("Customer Phone number has been updated" )
+        if rowsUpdated > 0:
+            print("Customer Phone number has been updated successfully." )
+        else:
+            print("Update failed, please try again with a valid credit card or ssn number.")    
     else:
         print("Please enter a non empty valid 10 digit phone number and retry.")  
     cnx.close()
@@ -200,16 +204,20 @@ def Modify_Cust_Address():
     COUNTRY=input("Enter New Country:")
     RESIDENCE = STREET_NAME +","+ APT_NO
     # Check if all input fields are filled
-    if CC_SSN and validate_credit_card_number(CC_SSN) or validate_ssn(CC_SSN) and APT_NO and STREET_NAME and CITY and STATE and ZIP and COUNTRY:
+    if CC_SSN and validate_credit_card_number(CC_SSN) and APT_NO and STREET_NAME and CITY and STATE and ZIP and COUNTRY:
     # Define another query
         query = ("""update cdw_sapp_customer
                 set APT_NO = %s,STREET_NAME = %s,RESIDENCE = %s,CUST_CITY = %s,CUST_STATE = %s,CUST_ZIP = %s,CUST_COUNTRY = %s
                 where CREDIT_CARD_NO = %s or SSN =%s""")
         params = (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY,CC_SSN,CC_SSN)
         cursor.execute(query,params)
+        rowsUpdated = cursor.rowcount
         cnx.commit()
-        # Print the results
-        print("Customer Address has been updated" )
+        # Print the results        
+        if rowsUpdated > 0:
+            print("Customer Address has been updated successfully." )
+        else:
+            print("Update failed, please try again with a valid credit card or ssn number.")
     else:
         print("Please provide all address fields.")    
     cnx.close()
@@ -231,8 +239,12 @@ def Modify_cust_email_ID():
         params = (CUST_EMAIL,CC_SSN,CC_SSN)
         cursor.execute(query,params)
         cnx.commit()
-        # Print the results
-        print("Customer Email Id has been updated" )
+        rowsUpdated = cursor.rowcount
+        # Print the results        
+        if rowsUpdated > 0:
+            print("Customer Email Id has been updated successfully." )
+        else:
+            print("Update failed, please try again with a valid credit card or ssn number.")
     else:
         print("Please enter valid input and retry.")  
     cnx.close()
