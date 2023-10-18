@@ -23,6 +23,10 @@ def get_json_file_data_aws_s3_bucket(bucket_name,file_name ):
     json_data = [json.loads(jline) for jline in data.splitlines()]    
     return json_data
 
+#Go To Mysql Workbench Write query
+#create schema creditcard_capstone; 
+#and its created
+
 def load_dataframe_in_db(data_frame,full_table_name):
     user= secret.mysql_username
     passw = secret.mysql_password
