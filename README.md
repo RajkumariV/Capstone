@@ -25,11 +25,11 @@
 You will need to add a secret.py file in your src folder and set the following properties so that when you execute the code it will take your specific credentials from this file. An alternate way would be to directly specify your specific database credentials in the python files whereever secret.py has been imported and used. 
 Propertied below:
 
-mysql_username = "Set your MySQL username"
-mysql_password = 'My SQL Password'
-(Optional properties below, they are needed only if you store your raw data files on AWS S3)
-aws_access_key_id='Your S3 access key' 
-aws_secret_access_key='Your S3 access password'
+mysql_username = "Set your MySQL username"  
+mysql_password = 'My SQL Password'  
+(Optional properties below, they are needed only if you store your raw data files on AWS S3)  
+aws_access_key_id='Your S3 access key'   
+aws_secret_access_key='Your S3 access password' 
 
 Refer to comments added in this file creditcard_and_loan_application_etl.py on ETL jobs to switch between using the input raw files from AWS S3 versus using the raw files from your local folder.
 
