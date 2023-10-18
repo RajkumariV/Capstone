@@ -24,7 +24,7 @@ def get_json_file_data_aws_s3_bucket(bucket_name,file_name ):
     return json_data
 
 #Go To Mysql Workbench Write query
-#create schema CompanyABC_DB; 
+#create schema creditcard_capstone; 
 #and its created
 
 def load_dataframe_in_db(data_frame,full_table_name):
