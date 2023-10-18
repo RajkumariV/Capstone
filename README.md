@@ -20,7 +20,7 @@
 
 ### Project Setup Instructions in Local Box
 
-# Secrets
+#### Secrets
 
 You will need to add a secret.py file in your src folder and set the following properties so that when you execute the code it will take your specific credentials from this file. An alternate way would be to directly specify your specific database credentials in the python files whereever secret.py has been imported and used. 
 Propertied below:
@@ -53,7 +53,7 @@ Once PySpark reads data from JSON files, and then utilizes Python, PySpark, and 
 		- CDW_SAPP_CREDIT_CARD
 		- CDW_SAPP_CUSTOMER
 
-## Database Connection- I have used different methods in different section to connect to database
+### Database Connection- I have used different methods in different section to connect to database
 A cnx (short for connection) is a lower-level object that represents a connection to a database. It is typically used for executing SQL statements DIRECTLY and managing transactions.
 (Query was done in database through python so cnx worked)
 
