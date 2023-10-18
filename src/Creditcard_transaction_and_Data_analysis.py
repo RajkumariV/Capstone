@@ -170,7 +170,7 @@ def Modify_cust_phone():
     CUST_PHONE=input("Enter New 10 digit valid phone number :")
     pattern = r'^\d{10}$'
     if CC_SSN and validate_credit_card_number(CC_SSN) or validate_ssn(CC_SSN) and CUST_PHONE and re.match(pattern,CUST_PHONE):
-        CUST_PHONE_FMT= f"({CUST_PHONE[:3]}) {CUST_PHONE[3:6]}-{CUST_PHONE[6:]}"    
+        CUST_PHONE_FMT= f"({CUST_PHONE[:3]}) {CUST_PHONE[3:6]}-{CUST_PHONE[6:]}"   
     # Define another query
         query = ("""update cdw_sapp_customer
                 set CUST_PHONE = %s
@@ -223,7 +223,7 @@ def Modify_cust_email_ID():
     CC_SSN= input("Enter Credit Card No or SSN Number of the customer:")
     CUST_EMAIL=input("Enter new valid email Id :")
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-    if CC_SSN and validate_credit_card_number(CC_SSN) or validate_ssn(CC_SSN) and CUST_EMAIL and (re.fullmatch(regex, CUST_EMAIL)):
+    if CC_SSN and validate_credit_card_number(CC_SSN) or validate_ssn(CC_SSN):
     # Define another query
         query = ("""update cdw_sapp_customer
                 set CUST_EMAIL = %s
@@ -234,7 +234,7 @@ def Modify_cust_email_ID():
         # Print the results
         print("Customer Email Id has been updated" )
     else:
-        print("Please enter valid email address and retry.")  
+        print("Please enter valid input and retry.")  
     cnx.close()
 
 #(menu-Update Customer Data-5)
