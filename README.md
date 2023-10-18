@@ -1,11 +1,11 @@
 # Per Scholas Capstone
-#### Final project for the Per Scholas Data Engineering course
+## Final project for the Per Scholas Data Engineering course
 
 ## Project requirements:
 
 ![Alt text](https://github.com/RajkumariV/Capstone/blob/dev/resources/graphs/Demo_Objective.png)
 
-# Things to considered before starting this project
+### Things taken into consideration while implementing this project
 
 #### Data safety 
 -refers to the protection of data from accidental or intentional loss, corruption, or unauthorized access. It involves creating backups, implementing disaster recovery plans, and ensuring that data is stored in a secure location.
@@ -15,16 +15,16 @@
 (To ensure Data Safety Customers SSN is handled as Masked.)
 #### Data validity 
 -refers to the degree to which data accurately represents the business rules or definitions. In other words, data must be relevant and representative of the business metrics it describes.
-(7 digit phone no in customer table can be a real time scnerio for that data engineer needs to check Area code if area code is concated to 7 digit number valid phone number can be created but in oue project area code was also not given so random no(111) added to make data valid)
+(7 digit phone number in customer table can be a real time scnerio for that data engineer needs to check area code if area code is concated to 7 digit number valid phone number can be created but in this project area code was also not given so random no(111) added to make data valid,and there are several libraries available to handle phone numbers in Python)
 
 
 ### Project Instructions
 #Local
-if you want to run this project in your local download raw files and while connecting to database use your user and password and mark # aws connection code as below for all 3 files.
+If you want to run this project in your local download raw files and while connecting to database use your user and password and mark # aws connection code as below for all 3 files.
 -#file_json_data = get_json_file_data_aws_s3_bucket("capstone.creditcard.loan","cdw_sapp_branch.json")    
 -#Branch_df=spark.read.json(spark.sparkContext.parallelize([file_json_data]))
 #AWS
-for connecting to cloud AWS create a S3 bucket in AWS account upload raw files ,create key id and key password use it for AWS connection mark #  file connection code as below for all 3 files
+If connecting to cloud AWS, create a S3 bucket in AWS account upload raw files ,create key id and key password use it for AWS connection mark # local file connection code as below for all 3 files
 -#branch_df=spark.read.json("C:\Capstone Project\CDW_SAPP_BRANCH.JSON")
 
 ### 1. Load Credit Card Database (SQL)
@@ -111,7 +111,7 @@ The above URL allows you to access information about loan application informatio
 
 ### Modifying Customer Account Details
 
-Project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well.So did some research on that and found that if we ask bank to change our appartment no. or strret no. or state or county ,Bank will ask full address proof for security purpose and full address is verified along with small apt change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate. Although this portion of the project took the longest to implement, writing the code this way did shorten the time it took to complete it.
+Project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well.So did some research on that and found that if we ask bank to change our appartment no. or strret no. or state or county ,Bank will ask full address proof for security purpose and full address is verified along with small apt change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate.Writing the code this way did shorten the time it took to complete it.
 
 ### Tableau vs Matplotlib
 

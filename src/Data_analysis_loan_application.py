@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
 import secret
+import matplotlib.ticker as mtick
 
 # Q Find and plot the percentage of applications approved for self-employed applicants.
 
@@ -12,6 +13,7 @@ def connect_to_database ():
     return engine
     
 
+#Q-Find and plot the percentage of applications approved for self-employed applicants.
 def Persantage_Approved_Self_Employed ():
     engine=connect_to_database ()
     df = pd.read_sql_table('cdw_sapp_loan_application', engine) 
@@ -36,7 +38,7 @@ def Persantage_Approved_Self_Employed ():
     plt.legend(labels=['Approved', 'Not Approved'],loc='upper left',bbox_to_anchor=(1,1))
     print(plt.show())
     
-
+#Q-Find the percentage of rejection for married male applicants.
 def Persantage_rejected_male_applicant():
     engine=connect_to_database ()
     df = pd.read_sql_table('cdw_sapp_loan_application', engine)  # Load data from database 
@@ -48,11 +50,8 @@ def Persantage_rejected_male_applicant():
     rejected_applications = married_male_df[married_male_df['Application_Status'] == 'N']
     total_rejected = len(rejected_applications)
     # print(rejected_applications)
-    
     rejection_rate = total_rejected / total_married_male
-    
     accepted_rate = 1 - rejection_rate  
-        
     plt.figure(figsize=(10, 6))
     explode = (0.05,0.05)
     plt.pie([rejection_rate, accepted_rate], labels=['Rejected', 'Accepted'],  autopct='%.2f%%',
@@ -70,29 +69,30 @@ def Persantage_rejected_male_applicant():
     plt.legend(labels=['Rejected', 'Accepted'],loc='upper left',bbox_to_anchor=(1,1))
     print(plt.show())
 
+# Q-Find and plot the top three months with the largest volume of transaction data.
 def Top_Three_Months_with_Largest_Transaction_Volume():
     engine=connect_to_database ()
-    
     df = pd.read_sql_table('cdw_sapp_credit_card', engine)
     top_month = df.groupby('MONTH')['TRANSACTION_VALUE'].sum()
     top_month = top_month.sort_values(ascending=False).head(3)
     print(top_month)
     colors = ['peru',  'burlywood','bisque']
+    fig, ax = plt.subplots(figsize=(8, 4), dpi=100)
     ax = top_month.plot.bar(rot='horizontal',color=colors)
-
-    ax.set_title(' Top three months with the largest volume of transaction data.')
+    ax.set_title('Top three months with the largest volume of transaction data.')
     ax.set_xlabel('Months')
     ax.set_ylabel('Transaction Amount')
     ax.set_ylim(200000, 203000)
-    ax.bar_label(ax.containers[0])
+    ax.bar_label(ax.containers[0],label_type='center')
     """ax.bar_label(ax.containers[0]) is a method call in Matplotlib that adds labels to the bars in a bar plot. The ax parameter is the Axes object that represents the plot, and the containers[0] parameter is the BarContainer object that contains the bars in the plot.
 
-The bar_label() method adds labels to the bars in the given BarContainer. You may need to adjust the axis limits to fit the labels. The fmt parameter specifies the format string for the labels, and the label_type parameter specifies whether to label the edge or center of each bar. The padding parameter specifies the padding between the label and the bar.
+The bar_label() method adds labels to the bars in the given BarContainer. The fmt parameter specifies the format string for the labels, and the label_type parameter specifies whether to label the edge or center of each bar. The padding parameter specifies the padding between the label and the bar.
 
 Here’s an example of how to use ax.bar_label(ax.containers[0]):"""
-
+    ax.yaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
     plt.show()
     
+# Q-Find and plot which branch processed the highest total dollar value of healthcare transactions.
 def branch_highest_value_healthcare_transactions():
     engine=connect_to_database ()
     df = pd.read_sql_table('cdw_sapp_credit_card', engine)
@@ -102,13 +102,14 @@ def branch_highest_value_healthcare_transactions():
     healthcare_data = healthcare_data.groupby('BRANCH_CODE')['TRANSACTION_VALUE'].sum()
     healthcare_data = healthcare_data.sort_values(ascending=False)
     top_branch=healthcare_data.head(1)
-    ax = top_branch.plot.bar(rot='horizontal',color='palegreen',width=0.2)
+    ax = top_branch.plot.bar(rot='horizontal',color='deepskyblue',width=0.2)
     ax.set_title('Top Branch in Healthcare Transactions')
     ax.set_xlabel('Top Branch Code')
     ax.set_ylabel('Transaction Amount')
-    ax.bar_label(ax.containers[0],color='red')
-    
+    ax.bar_label(ax.containers[0],color='red',fontsize=12, fontweight="bold",label_type='center')
+    ax.yaxis.set_major_formatter(mtick.StrMethodFormatter('${x:,.0f}'))
     plt.show()
+    
         
     
 
