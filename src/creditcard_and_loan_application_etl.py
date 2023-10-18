@@ -42,6 +42,7 @@ def etl_credit_card_branch_data():
     spark= get_spark_session()
     file_json_data = get_json_file_data_aws_s3_bucket("capstone.creditcard.loan","cdw_sapp_branch.json")    
     Branch_df=spark.read.json(spark.sparkContext.parallelize([file_json_data]))
+    #Uncomment below line if you want to use the raw files from the resource folder and comment out the above two lines for S3
     #Branch_df=spark.read.json("../resources/data-files/CDW_SAPP_BRANCH.JSON")  
     Branch_df = Branch_df.fillna({"BRANCH_ZIP": 99999})
     format_phone_number_udf = F.udf(format_phone_number, StringType())
@@ -54,6 +55,7 @@ def etl_credit_card_card_data():
     spark= get_spark_session()
     file_json_data = get_json_file_data_aws_s3_bucket("capstone.creditcard.loan","cdw_sapp_credit.json")    
     credit_df=spark.read.json(spark.sparkContext.parallelize([file_json_data]))
+    #Uncomment below line if you want to use the raw files from the resource folder and comment out the above two lines for S3
     #credit_df=spark.read.json("C:\Capstone Project\CDW_SAPP_CREDIT.JSON")
     credit_df= credit_df.withColumn("date", to_date(credit_df["YEAR"]*10000 + credit_df["MONTH"]*100 + credit_df["DAY"], "yyyyMMdd"))
     load_dataframe_in_db(credit_df,"creditcard_capstone.CDW_SAPP_CREDIT_CARD")
@@ -64,6 +66,7 @@ def etl_credit_card_customer_data():
     spark= get_spark_session()
     file_json_data = get_json_file_data_aws_s3_bucket("capstone.creditcard.loan","cdw_sapp_custmer.json")    
     customer_df=spark.read.json(spark.sparkContext.parallelize([file_json_data]))
+    #Uncomment below line if you want to use the raw files from the resource folder and comment out the above two lines for S3
     #customer_df=spark.read.json("C:\Capstone Project\CDW_SAPP_CUSTMER.JSON")
     customer_df=customer_df.withColumn("FIRST_NAME", initcap("FIRST_NAME"))
     customer_df = customer_df.withColumn("MIDDLE_NAME", lower("MIDDLE_NAME"))

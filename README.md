@@ -15,17 +15,27 @@
 (To ensure Data Safety Customers SSN is handled as Masked.)
 #### Data validity 
 -refers to the degree to which data accurately represents the business rules or definitions. In other words, data must be relevant and representative of the business metrics it describes.
-(7 digit phone number in customer table can be a real time scnerio for that data engineer needs to check area code if area code is concated to 7 digit number valid phone number can be created but in this project area code was also not given so random no(111) added to make data valid,and there are several libraries available to handle phone numbers in Python)
+(7 digit phone number in customer table can be a real time scenerio where data engineer needs to check the area code, by concatenating the 3 digit area code to the  7 digit number a valid phone number can be created and also there are several libraries available to perform data validations on email id, phone number, home address which has been taken care in this project by using python inbuilt methods and regular expressions.)
 
 
-### Project Instructions
-#Local
-If you want to run this project in your local download raw files and while connecting to database use your user and password and mark # aws connection code as below for all 3 files.
--#file_json_data = get_json_file_data_aws_s3_bucket("capstone.creditcard.loan","cdw_sapp_branch.json")    
--#Branch_df=spark.read.json(spark.sparkContext.parallelize([file_json_data]))
-#AWS
-If connecting to cloud AWS, create a S3 bucket in AWS account upload raw files ,create key id and key password use it for AWS connection mark # local file connection code as below for all 3 files
--#branch_df=spark.read.json("C:\Capstone Project\CDW_SAPP_BRANCH.JSON")
+### Project Setup Instructions in Local Box
+
+# Secrets
+
+You will need to add a secret.py file in your src folder and set the following properties so that when you execute the code it will take your specific credentials from this file. An alternate way would be to directly specify your specific database credentials in the python files whereever secret.py has been imported and used. 
+Propertied below:
+
+mysql_username = "Set your MySQL username"
+mysql_password = 'My SQL Password'
+(Optional properties below, they are needed only if you store your raw data files on AWS S3)
+aws_access_key_id='Your S3 access key' 
+aws_secret_access_key='Your S3 access password'
+
+Refer to comments added in this file creditcard_and_loan_application_etl.py on ETL jobs to switch between using the input raw files from AWS S3 versus using the raw files from your local folder.
+
+Tu run the project menu , use command from console "python capstone_menu.py"
+
+## Below functionalites have been implemented in this project
 
 ### 1. Load Credit Card Database (SQL)
 #### 1.1) Data Extraction and Transformation with Python and PySpark
@@ -65,7 +75,7 @@ Once data is loaded into the database, we need a front-end (console) to see/disp
 
 ### 3. Credit Card Data Analysis and Visualization
 
-## Tableau
+#### Tableau
 For this section I have used Tableau so query was done in database and then saved it in csv file and loaded in Tableau to make plots,and these be used in Power BI, however Tableau desktop gives us option to connect to my sql database and query inside tableau.
 
 #### 3.1) Find and plot which transaction type has the highest transaction count.
@@ -111,14 +121,13 @@ The above URL allows you to access information about loan application informatio
 
 ### Modifying Customer Account Details
 
-Project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well.So did some research on that and found that if we ask bank to change our appartment no. or strret no. or state or county ,Bank will ask full address proof for security purpose and full address is verified along with small apt change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate.Writing the code this way did shorten the time it took to complete it.
+Project requirement in section 2.2 is having the option to modify a customer's account details. This includes every part of a customer's account excluding a few parameters ('SSN' and 'LAST_UPDATED' columns). Even 'FULL_STREET_ADDRESS' was included as well.So did some research on that and found that if we ask bank to change our appartment no. or street no. or state or county ,Bank will ask full address proof for security purpose and full address is verified even for a small change so (APT_NO,STREET_NAME,RESIDENCE,CITY,STATE,ZIP,COUNTRY )cosidered as one part and CUST_PHONE and CUST_EMAIL is cosidered seprate. Writing the code this way did shorten the time to complete it.
 
 ### Tableau vs Matplotlib
 
 Tableau is a business intelligence tool that allows you to connect to almost any database, drag and drop to create visualizations, and share with a click. It provides a user-friendly system that allows you to create attractive visualizations with ease.
 Matplotlib, on the other hand, is a Python plotting library that produces publication-quality figures in a variety of hardcopy formats and interactive environments across platforms. It offers a variety of free data visualization libraries to data scientists such as Seaborn, Plotly, and more. With Matplotlib, you can visualize any data and their available documentation offers a better user experience.
 In summary, if you’re looking for a tool that provides attractive visualizations with ease of use, Tableau might be the right choice for you. If you’re looking for a more flexible and customizable tool that allows you to create publication-quality figures, Matplotlib might be the better option.
-So for section Three I used Tableau and for section 5 I used matplotlib.
 
 ## Skillsets
 - Python
